@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [[ $EUID -ne 0 ]]; then
+   echo "got root?" 1>&2
+   exit 1;
+else
+   /bin/mount -o remount,rw / ; 
+   /bin/mount --bind /etc_org /etc; 
+   /bin/mount --bind /var_org /var;
+fi
