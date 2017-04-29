@@ -1,16 +1,24 @@
 #!/bin/sh
 
-UPSTREAM=${1:-'@{u}'}
-LOCAL=$(git rev-parse @)
-REMOTE=$(git rev-parse "$UPSTREAM")
-BASE=$(git merge-base @ "$UPSTREAM")
+[ $(git rev-parse HEAD) = $(git ls-remote $(git rev-parse --abbrev-ref @{u} | \
+sed 's/\// /g') | cut -f1) ] && update_repo=0 || update_repo=1
 
-if [ $LOCAL = $REMOTE ]; then
-    echo "Up-to-date"
-elif [ $LOCAL = $BASE ]; then
-    echo "Need to pull"
-elif [ $REMOTE = $BASE ]; then
-    echo "Need to push"
+
+if [ $update_repo  = 1 ]; then
+ echo "Updating the repo!"
+
+ echo "Remounting writeable"
+ rw
+
+ echo "Updating via github"
+ git pull
+
+ echo "Remounting Readonly"
+ ro
+
+ echo "Done"
+
 else
-    echo "Diverged"
-fi
+ echo "Up to date. Quitting"
+
+fi;
