@@ -38,11 +38,17 @@ function check_for_update() {
             echo "use '$0 --execute' to execute the update"
             exit 1
         else
+            echo "setting drive to read-write"
+            rw
+
             echo "running 'git reset --hard'"
             git reset --hard
 
             echo "running 'git merge tags/$TAG_LATEST'"
             git merge tags/$TAG_LATEST
+
+            echo "setting drive to read-only"
+            ro
 
             echo "Update successful."
         fi
