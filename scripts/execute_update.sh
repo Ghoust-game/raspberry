@@ -9,6 +9,9 @@ set -e
 
 DIRECTORIES="/server/webserver/frontend /server/ghoust /server/raspberry"
 
+echo "setting into read-write"
+rw
+
 for DIR in $DIRECTORIES; do
     echo "changing into $DIR"
     cd "$DIR"
@@ -25,3 +28,6 @@ for DIR in $DIRECTORIES; do
 done;
 
 mosquitto_pub -h localhost -p 1883 -t "GHOUST/server/updated-performed" -m 1
+
+echo "setting into read-only"
+ro
