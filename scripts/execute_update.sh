@@ -7,7 +7,7 @@
 
 set -e
 
-DIRECTORIES = "/server/webserver/frontend /server/ghoust /server/raspberry"
+DIRECTORIES="/server/webserver/frontend /server/ghoust /server/raspberry"
 
 for DIR in $DIRECTORIES; do
     echo "changing into $DIR"
