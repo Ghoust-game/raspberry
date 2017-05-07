@@ -3,7 +3,7 @@
 set -e
 
 while true; do
-	if mosquitto_sub -C 1 -R -h localhost -p 1884 -t "GHOUST/server/perform-update"; then
+	if mosquitto_sub -C 1 -R -h localhost -p 1883 -t "GHOUST/server/perform-update"; then
 	    echo "Beginning update"
 	    rw
 	    for DIR in ["/server/webserver/frontend" "/server/ghoust"]; do

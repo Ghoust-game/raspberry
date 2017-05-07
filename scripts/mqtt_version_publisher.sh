@@ -29,8 +29,8 @@ function check_for_update() {
     
 
     echo "current=$TAG_CURRENT, latest=$TAG_LATEST"
-    mosquitto_pub --will-retain -h 127.0.0.1 -p 1884 -t "/GHOUST/server/version/$COMPONENT/current" -m "$TAG_CURRENT"
-    mosquitto_pub --will-retain -h 127.0.0.1 -p 1884 -t "/GHOUST/server/version/$COMPONENT/latest" -m "$TAG_LATEST"
+    mosquitto_pub -r -h 127.0.0.1 -p 1883 -t "GHOUST/server/version/$COMPONENT/current" -m "$TAG_CURRENT"
+    mosquitto_pub -r -h 127.0.0.1 -p 1883 -t "GHOUST/server/version/$COMPONENT/latest" -m "$TAG_LATEST"
     
     if [ "$TAG_CURRENT" == "$TAG_LATEST" ]; then
         echo "Ghoust is already the latest version."
