@@ -12,9 +12,10 @@ set -euf -o pipefail
 
 function check_for_update() {
     GIT_PATH="$1"
-    EXECUTE_UPDATE="$2"
+    COMPONENT="$2"
 
     echo "Changing into '$GIT_PATH'"
+    cd "$GIT_PATH"
 
     # get latewst tags from online
     echo "Fetching latest version information..."
@@ -28,8 +29,8 @@ function check_for_update() {
     
 
     echo "current=$TAG_CURRENT, latest=$TAG_LATEST"
-    mosquitto_pub --will-retain -h 127.0.0.1 -p 1884 -t "/GHOUST/server/version/current" -m "$TAG_CURRENT"
-    mosquitto_pub --will-retain -h 127.0.0.1 -p 1884 -t "/GHOUST/server/version/latest" -m "$TAG_LATEST"
+    mosquitto_pub --will-retain -h 127.0.0.1 -p 1884 -t "/GHOUST/server/version/$COMPONENT/current" -m "$TAG_CURRENT"
+    mosquitto_pub --will-retain -h 127.0.0.1 -p 1884 -t "/GHOUST/server/version/$COMPONENT/latest" -m "$TAG_LATEST"
     
     if [ "$TAG_CURRENT" == "$TAG_LATEST" ]; then
         echo "Ghoust is already the latest version."
@@ -38,9 +39,5 @@ function check_for_update() {
     fi
 }
 
-
-DIRECTORIES="/server/webserver/frontend /server/ghoust®"
-for DIR in $DIRECTORIES; do
-  echo "dir: $DIR"
-  check_for_update "./" "$1"
-done
+check_for_update "/server/webserver/frontend" "frontend"
+check_for_update "/server/ghoust" "ghoust" 
