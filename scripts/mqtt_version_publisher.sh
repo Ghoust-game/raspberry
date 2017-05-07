@@ -26,12 +26,12 @@ function check_for_update() {
 
     # whats the current tag?
     TAG_CURRENT=$( git describe --tags )
-    
+
 
     echo "current=$TAG_CURRENT, latest=$TAG_LATEST"
     mosquitto_pub -r -h 127.0.0.1 -p 1883 -t "GHOUST/server/version/$COMPONENT/current" -m "$TAG_CURRENT"
     mosquitto_pub -r -h 127.0.0.1 -p 1883 -t "GHOUST/server/version/$COMPONENT/latest" -m "$TAG_LATEST"
-    
+
     if [ "$TAG_CURRENT" == "$TAG_LATEST" ]; then
         echo "Ghoust is already the latest version."
     else
@@ -40,4 +40,5 @@ function check_for_update() {
 }
 
 check_for_update "/server/webserver/frontend" "frontend"
-check_for_update "/server/ghoust" "ghoust" 
+check_for_update "/server/ghoust" "ghoust"
+check_for_update "/server/raspberry" "raspberry"
