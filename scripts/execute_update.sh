@@ -24,4 +24,4 @@ for DIR in $DIRECTORIES; do
     git merge "tags/$TAG_LATEST"
 done;
 
-mosquitto_pub -h localhost -p 1883 -t "GHOUST/server/updated-performed"
+mosquitto_pub -h localhost -p 1883 -t "GHOUST/server/updated-performed" -m 1
