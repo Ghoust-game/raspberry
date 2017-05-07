@@ -21,5 +21,6 @@ while true; do
 	    done;
 	    echo "Ending update"
 	    ro
+	    mosquitto_pub -h localhost -p 1883 -t "GHOUST/server/updated-performed"
 	fi
 done;
