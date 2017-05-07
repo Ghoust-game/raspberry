@@ -22,7 +22,6 @@ for DIR in $DIRECTORIES; do
     echo "running 'git reset --hard' in $DIR"
     git reset --hard
 
-
     echo "running 'git merge tags/$TAG_LATEST' in $DIR"
     git merge "tags/$TAG_LATEST"
 done;
@@ -31,3 +30,9 @@ mosquitto_pub -h localhost -p 1883 -t "GHOUST/server/updated-performed" -m 1
 
 echo "setting into read-only"
 ro
+
+echo "restarting ghoust service"
+service ghoust restart
+
+echo "publishing current versions"
+/server/raspberry/scripts/mqtt_version_publisher.sh
