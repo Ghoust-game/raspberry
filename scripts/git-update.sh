@@ -8,26 +8,13 @@
 #
 # Author: Chris Hager <chris@linuxuser.at>
 #
-
-function execute_update() {
-    GIT_PATH="$1"
-    echo "Changing into '$GIT_PATH'"
-    cd "$GIT_PATH"
-
-    # whats the latest tag?
-    TAG_LATEST=$( git tag -l | tail -n 1 )
-
-    echo "running 'git reset --hard'"
-    git reset --hard
-
-    echo "running 'git merge tags/$TAG_LATEST'"
-    git merge tags/$TAG_LATEST
-
-    echo "Update successful."
-}
+set -euf -o pipefail
 
 function check_for_update() {
     GIT_PATH="$1"
+    EXECUTE_UPDATE="$2"
+
+    echo "Changing into '$GIT_PATH'"
 
     # get latewst tags from online
     echo "Fetching latest version information..."
@@ -47,13 +34,24 @@ function check_for_update() {
         echo "A newer version is available!"
 
         # Update with '--update arg'
-        if [ "$1" != "--update" ]; then
-            echo "use '$0 --update' to execute the update"
+        if [ "$EXECUTE_UPDATE" != "--execute" ]; then
+            echo "use '$0 --execute' to execute the update"
             exit 1
         else
-            execute_update $GIT_PATH
+            echo "running 'git reset --hard'"
+            git reset --hard
+
+            echo "running 'git merge tags/$TAG_LATEST'"
+            git merge tags/$TAG_LATEST
+
+            echo "Update successful."
         fi
     fi
 }
 
-check_for_update "./"
+
+DIRECTORIES="/server/webserver/frontend /server/ghoust®"
+for DIR in $DIRECTORIES; do
+  echo "dir: $DIR"
+  check_for_update "./" "$1"
+done
