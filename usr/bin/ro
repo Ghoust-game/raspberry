@@ -5,5 +5,7 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-mount -o remount,ro / ; 
-umount /etc; umount /var;
+mount -o remount,ro /
+umount /etc
+umount /var
+umount /server

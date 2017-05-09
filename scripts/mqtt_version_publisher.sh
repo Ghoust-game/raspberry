@@ -6,13 +6,15 @@
 # 1. Get latest tags from the Git remote
 # 2. If the latest tag is different from the current one, allow to update self
 #
-# Author: Chris Hager <chris@linuxuser.at>
+# Authors:
+# - Chris Hager <chris@linuxuser.at>
+# - Stefan Farthofer <s@w23.at>
 #
 set -euf -o pipefail
 
 function check_for_update() {
     GIT_PATH="$1"
-    COMPONENT="$2"
+    COMPONENT_NAME="$2"
 
     echo "Changing into '$GIT_PATH'"
     cd "$GIT_PATH"
@@ -27,10 +29,9 @@ function check_for_update() {
     # whats the current tag?
     TAG_CURRENT=$( git describe --tags )
 
-
     echo "current=$TAG_CURRENT, latest=$TAG_LATEST"
-    mosquitto_pub -r -h 127.0.0.1 -p 1883 -t "GHOUST/server/version/$COMPONENT/current" -m "$TAG_CURRENT"
-    mosquitto_pub -r -h 127.0.0.1 -p 1883 -t "GHOUST/server/version/$COMPONENT/latest" -m "$TAG_LATEST"
+    mosquitto_pub -r -h 127.0.0.1 -p 1883 -t "GHOUST/server/version/$COMPONENT_NAME/current" -m "$TAG_CURRENT"
+    mosquitto_pub -r -h 127.0.0.1 -p 1883 -t "GHOUST/server/version/$COMPONENT_NAME/latest" -m "$TAG_LATEST"
 
     if [ "$TAG_CURRENT" == "$TAG_LATEST" ]; then
         echo "Ghoust is already the latest version."

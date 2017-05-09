@@ -2,7 +2,7 @@
 #
 # Execute the update of all git repos
 #
-# 'git pull --tags' has to be executed before separately.
+# 'git fetch --tags' has to be executed before separately.
 #
 
 set -e
@@ -23,7 +23,7 @@ for DIR in $DIRECTORIES; do
     git reset --hard
 
     echo "running 'git merge tags/$TAG_LATEST' in $DIR"
-    git merge "tags/$TAG_LATEST"
+    git checkout "tags/$TAG_LATEST"
 done;
 
 mosquitto_pub -h localhost -p 1883 -t "GHOUST/server/updated-performed" -m 1
