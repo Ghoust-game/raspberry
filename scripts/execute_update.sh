@@ -22,7 +22,7 @@ for DIR in $DIRECTORIES; do
     echo "running 'git reset --hard' in $DIR"
     git reset --hard
 
-    echo "running 'git merge tags/$TAG_LATEST' in $DIR"
+    echo "running 'git checkout tags/$TAG_LATEST' in $DIR"
     git checkout "tags/$TAG_LATEST"
 done;
 
