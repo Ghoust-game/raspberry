@@ -8,11 +8,13 @@ import paho.mqtt.client as mqtt
 
 MQTT_TOPIC_PERFORM_UPDATE = "GHOUST/server/perform-update"
 CMD_UPDATE = "/server/raspberry/scripts/execute_update.sh"
+CMD_PUBLISH_VERSIONS = "/server/raspberry/scripts/mqtt_version_publisher.sh"
 
 class Updater:
     mqtt_client = None
 
     def run(self):
+        os.system(CMD_PUBLISH_VERSIONS)
         self.mqtt_client = mqtt.Client("GHOUST_UPDATER", clean_session=False)
 
         self.mqtt_client._on_connect = self.mqtt_on_connect

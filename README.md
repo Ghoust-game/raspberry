@@ -11,6 +11,12 @@ These files are NOT the game itself but things like:
 Full documentation on how to setup a Raspebrry Pi from scratch will be available in the [wiki](https://github.com/Ghoust-game/raspberry/wiki) soon.
 
 
+# Wanna see logs?
+
+    $ sudo journalctl -u ghoust -f
+    $ sudo journalctl -u ghoust-updater -f
+
+
 # Pi Setup from Scratch
 
 Start with a new Raspbian image.
@@ -25,7 +31,7 @@ From now on it is a good idea to work in a SSH session
     $ sudo apt-get install avahi-daemon
     $ sudo systemctl enable avahi-daemon
 
-    $ apt-get install git
+    $ apt-get install git python3 python3-pip
 
     # Clone git repos into /server
     $ mkdir /server && cd /server
