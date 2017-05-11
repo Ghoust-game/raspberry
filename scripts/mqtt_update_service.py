@@ -4,6 +4,7 @@ This app listens for a specific MQTT messages
 and triggers the update scripts.
 """
 import os
+import time
 import paho.mqtt.client as mqtt
 
 MQTT_TOPIC_PERFORM_UPDATE = "GHOUST/server/perform-update"
@@ -14,6 +15,7 @@ class Updater:
     mqtt_client = None
 
     def run(self):
+        time.sleep(10)
         os.system(CMD_PUBLISH_VERSIONS)
         self.mqtt_client = mqtt.Client("GHOUST_UPDATER", clean_session=False)
 
