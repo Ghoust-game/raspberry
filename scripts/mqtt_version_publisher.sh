@@ -40,6 +40,6 @@ function check_for_update() {
     fi
 }
 
-check_for_update "/server/webserver/frontend" "frontend"
+check_for_update "/server/frontend" "frontend"
 check_for_update "/server/ghoust" "ghoust"
 check_for_update "/server/raspberry" "raspberry"

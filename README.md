@@ -34,3 +34,4 @@ From now on it is a good idea to work in a SSH session
     $ git clone https://github.com/Ghoust-game/frontend.git
 
     # Setup mosquitto and hostapd
+    apt-get install mosquitto mosquitto-clients
