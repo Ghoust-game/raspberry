@@ -5,7 +5,10 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-mount -o remount,ro /
-umount /etc
-umount /var
-umount /server
+fs_mode=$(mount | sed -n -e "s/^\/dev\/.* on \/ .*(\(r[w|o]\).*/\1/p")
+if [ $fs_mode == "rw" ] ;
+then
+ /bin/mount -o remount,ro /;
+else
+ echo "Exiting. Filesystem is mounted readonly at the moment anyway..";
+fi

@@ -1,11 +1,18 @@
 #!/bin/bash
 
+
+
+
+
 if [[ $EUID -ne 0 ]]; then
    echo "got root?" 1>&2
    exit 1
 fi
 
-/bin/mount -o remount,rw /
-/bin/mount --bind /etc_org /etc
-/bin/mount --bind /var_org /var
-/bin/mount --bind /server_org /server
+fs_mode=$(mount | sed -n -e "s/^\/dev\/.* on \/ .*(\(r[w|o]\).*/\1/p")
+if [ $fs_mode == "ro" ] ;
+then
+ /bin/mount -o remount,rw /;
+else
+ echo "Exiting. Filesystem is mounted writeable at the moment anyway..";
+fi
