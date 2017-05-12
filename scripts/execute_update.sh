@@ -9,8 +9,8 @@ set -e
 
 DIRECTORIES="/server/frontend /server/ghoust /server/raspberry"
 
-#echo "setting into read-write"
-#rw
+echo "setting into read-write"
+rw
 
 for DIR in $DIRECTORIES; do
     echo "changing into $DIR"
@@ -28,8 +28,8 @@ done;
 
 mosquitto_pub -h localhost -p 1883 -t "GHOUST/server/updated-performed" -m 1
 
-#echo "setting into read-only"
-#ro
+echo "setting into read-only"
+ro
 
 echo "restarting ghoust service"
 service ghoust restart
